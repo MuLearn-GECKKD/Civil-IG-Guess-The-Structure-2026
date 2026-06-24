@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Structure Identification Quiz</title>
     <style>
+        /* Base Styling & Material Design Background */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+            font-family: 'Google Sans', 'Roboto', Arial, sans-serif;
+            background-color: #f0ebf8; /* Google Forms classic light purple background */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -15,124 +16,207 @@
             margin: 0;
             padding: 20px;
             box-sizing: border-box;
+            color: #202124;
         }
+        
+        /* The Main Cards */
         .container {
             background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 35px 30px;
+            border-radius: 8px;
+            /* Authentic Google Form shadow */
+            box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
             width: 100%;
-            max-width: 500px;
-            text-align: center;
+            max-width: 550px;
             box-sizing: border-box;
+            border-top: 8px solid #673ab7; /* Google Form Purple */
+            margin-bottom: 20px;
         }
+        
         #quiz-section, #result-section, #options-container {
             display: none;
         }
-        #timer {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #d9534f;
-            margin-bottom: 15px;
+        
+        h2, h3 {
+            margin-top: 0;
+            font-weight: 400;
         }
+
+        /* Timer Styling */
+        #timer {
+            font-size: 1.1rem;
+            color: #d93025;
+            background: #fce8e6;
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 25px;
+            font-weight: bold;
+        }
+        
+        /* Form Inputs (Material Design Style) */
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             text-align: left;
         }
+        
         .form-group label {
             display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-        .form-group input[type="text"], .form-group input[type="email"], .form-group select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
+            margin-bottom: 10px;
             font-size: 1rem;
+            color: #202124;
         }
+        
+        .form-group input[type="text"], 
+        .form-group input[type="email"], 
+        .form-group select {
+            width: 100%;
+            padding: 8px 0;
+            border: none;
+            border-bottom: 1px solid #dadce0;
+            background-color: transparent;
+            font-size: 0.95rem;
+            transition: border-bottom 0.2s;
+            outline: none;
+        }
+
+        .form-group input:focus, 
+        .form-group select:focus {
+            border-bottom: 2px solid #673ab7;
+        }
+        
+        /* Checkbox Styling */
         .checkbox-group {
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            background: #f8f9fa;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #eee;
+            gap: 12px;
         }
+        
         .checkbox-group label {
             font-weight: normal;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             margin: 0;
             cursor: pointer;
+            font-size: 0.95rem;
+            color: #202124;
         }
-        button {
-            padding: 12px 20px;
-            font-size: 1rem;
-            background-color: #0275d8;
+
+        .checkbox-group input[type="checkbox"] {
+            accent-color: #673ab7;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        /* Primary Action Buttons */
+        .primary-btn {
+            padding: 10px 24px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            background-color: #673ab7;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
-            transition: background 0.3s;
-            width: 100%;
-            margin-top: 10px;
+            transition: background 0.2s, box-shadow 0.2s;
+            margin-top: 15px;
         }
-        button:hover { background-color: #025aa5; }
+        
+        .primary-btn:hover { 
+            background-color: #5e35b1; 
+            box-shadow: 0 1px 3px 0 rgba(60,64,67,.3), 0 4px 8px 3px rgba(60,64,67,.15);
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        /* Quiz Image Styling */
         .question-image {
             max-width: 100%;
             height: auto;
             border-radius: 8px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #dadce0;
         }
+        
+        /* Quiz Options Styling (Clickable Cards) */
         .options-container {
             display: flex;
             flex-direction: column;
             gap: 10px;
         }
+        
+        .option-btn {
+            background-color: white;
+            color: #202124;
+            border: 1px solid #dadce0;
+            text-align: left;
+            padding: 16px;
+            font-size: 0.95rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .option-btn:hover {
+            background-color: #f8f9fa;
+        }
+
+        /* Highlight when an option is selected */
+        .option-btn.selected {
+            background-color: #f3e8fd;
+            border: 2px solid #673ab7;
+            color: #673ab7;
+            font-weight: 500;
+            padding: 15px; /* Adjust padding to offset the thicker border */
+        }
+
         #sync-status {
-            font-size: 0.9rem;
-            color: #f0ad4e;
-            margin-top: 10px;
+            font-size: 0.95rem;
+            margin-top: 15px;
         }
     </style>
 </head>
 <body>
 
 <div id="intro-section" class="container">
-    <h2>Structure Identification Quiz</h2>
-    <p><strong>Instructions:</strong> First, examine the structural image provided. When ready, click "Proceed to Options"—the image will hide and the selection choices will appear. You have <strong>60 seconds per question</strong>.</p>
+    <h2 style="font-size: 2rem; margin-bottom: 10px;">Structure Identification Quiz</h2>
+    <p style="color: #5f6368; font-size: 0.95rem; line-height: 1.5; margin-bottom: 20px;">
+        <strong>Instructions:</strong> First, examine the structural image provided. When ready, click "Proceed to Options"—the image will hide and the selection choices will appear. You have <strong>60 seconds per question</strong>.
+    </p>
+    <hr style="border: 0; border-top: 1px solid #dadce0; margin: 25px 0;">
     
     <form id="user-form">
         <div class="form-group">
-            <label for="userName">Full Name</label>
-            <input type="text" id="userName" required placeholder="Enter your full name">
+            <label for="userName">Full Name <span style="color: red;">*</span></label>
+            <input type="text" id="userName" required placeholder="Your answer">
         </div>
 
         <div class="form-group">
-            <label for="userEmail">Email Address</label>
-            <input type="email" id="userEmail" required placeholder="Enter your email address">
+            <label for="userEmail">Email Address <span style="color: red;">*</span></label>
+            <input type="email" id="userEmail" required placeholder="Your answer">
         </div>
 
         <div class="form-group">
-            <label>Department</label>
+            <label>Department <span style="color: red;">*</span></label>
             <div class="checkbox-group">
                 <label><input type="checkbox" name="dept" value="ECE"> Electronics & Communication (ECE)</label>
                 <label><input type="checkbox" name="dept" value="CSD"> Computer Science & Design (CSD)</label>
                 <label><input type="checkbox" name="dept" value="ME"> Mechanical Engineering (ME)</label>
                 <label><input type="checkbox" name="dept" value="CHE"> Chemical Engineering (CHE)</label>
                 <label><input type="checkbox" name="dept" value="CE"> Civil Engineering (CE)</label>
-                <label><input type="checkbox" name="dept" value="AEI"> Applied Electronics & Instrumentation(AEI)</label>
+                <label><input type="checkbox" name="dept" value="AEI"> Applied Electronics & Instrumentation (AEI)</label>
             </div>
         </div>
 
         <div class="form-group">
-            <label for="userSem">Semester</label>
+            <label for="userSem">Semester <span style="color: red;">*</span></label>
             <select id="userSem" required>
-                <option value="" disabled selected>Select your current semester</option>
+                <option value="" disabled selected>Choose</option>
                 <option value="S1">Semester 1 (S1)</option>
                 <option value="S3">Semester 3 (S3)</option>
                 <option value="S5">Semester 5 (S5)</option>
@@ -140,91 +224,64 @@
             </select>
         </div>
 
-        <button type="submit">Start Quiz</button>
+        <div class="btn-container">
+            <button type="submit" class="primary-btn">Start Quiz</button>
+        </div>
     </form>
 </div>
 
 <div id="quiz-section" class="container">
-    <div id="timer">Time Left: <span id="time">60</span>s</div>
+    <div style="text-align: right;">
+        <div id="timer">Time Left: <span id="time">60</span>s</div>
+    </div>
     
     <div id="image-container">
-        <h3>Study this structure carefully:</h3>
+        <h3 style="margin-bottom: 20px;">Identify the structure shown in the image.</h3>
         <img id="question-img" class="question-image" src="" alt="Quiz Image">
-        <button id="proceed-btn">Proceed to Options</button>
+        <div class="btn-container">
+            <button id="proceed-btn" class="primary-btn">Proceed to Options</button>
+        </div>
     </div>
 
     <div id="options-container">
-        <h3>Select the correct identification:</h3>
+        <h3 style="margin-bottom: 20px;">Select the correct identification:</h3>
         <div id="options-list" class="options-container"></div>
+        
+        <div class="btn-container">
+            <button id="confirm-btn" class="primary-btn" style="display: none; margin-top: 20px;">Confirm Answer</button>
+        </div>
     </div>
 </div>
 
 <div id="result-section" class="container">
-    <h2>Quiz Complete!</h2>
-    <p>Your Score: <strong id="score">0</strong> / 10</p>
+    <h2 style="font-size: 2rem; margin-bottom: 10px;">Quiz Complete!</h2>
+    <p style="font-size: 1.2rem; margin-top: 20px;">Your Score: <strong id="score" style="color: #673ab7; font-size: 1.5rem;">0</strong> / 10</p>
     <p id="sync-status">Transmitting your performance to records...</p>
 </div>
 
 <script>
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyyV609kyV5Exwf9oD-rp0S3OtnqtqN0bSoGCGa66Q-2f4hcWCvkWmKm8Il5AP4UvH2/exec";
 
-   const quizData = [
-        { 
-            image: "images/sydney Opera Hourse.jpeg", 
-            options: ["Sydney Opera House", "Lotus Temple", "Burj Al Arab", "Marina Bay Sands"], 
-            answer: "Sydney Opera House" 
-        },
-        { 
-            image: "images/Hoover Dam.jpeg", 
-            options: ["Itaipu Dam", "Hoover Dam", "Three Gorges Dam", "Aswan High Dam"], 
-            answer: "Hoover Dam" 
-        },
-        { 
-            image: "images/Golden gate bridge.jpeg", 
-            options: ["Brooklyn Bridge", "Akashi Kaikyo Bridge", "Golden Gate Bridge", "Tower Bridge"], 
-            answer: "Golden Gate Bridge" 
-        },
-        { 
-            image: "images/Burj Khalifa.jpeg", 
-            options: ["Shanghai Tower", "Burj Khalifa", "Petronas Towers", "Taipei 101"], 
-            answer: "Burj Khalifa" 
-        },
-        { 
-            image: "images/Petronas Tower.jpeg", 
-            options: ["Willis Tower", "Petronas Towers", "Kingdom Centre", "Marina Bay Sands"], 
-            answer: "Petronas Towers" 
-        },
-        { 
-            image: "images/Millau Viaduct.jpeg", 
-            options: ["Millau Viaduct", "Golden Gate Bridge", "Vasco da Gama Bridge", "Akashi Kaikyo Bridge"], 
-            answer: "Millau Viaduct" 
-        },
-        { 
-            image: "images/Akashi Kaikyo Bridge.jpeg", 
-            options: ["Humber Bridge", "Akashi Kaikyo Bridge", "Mackinac Bridge", "Golden Gate Bridge"], 
-            answer: "Akashi Kaikyo Bridge" 
-        },
-        { 
-            image: "images/Chenab railway Bridge.jpeg", 
-            options: ["Bogibeel Bridge", "Chenab Railway Bridge", "Pamban Bridge", "Millau Viaduct"], 
-            answer: "Chenab Railway Bridge" 
-        },
-        { 
-            image: "images/Pillars of Taj Mahal.jpeg", 
-            options: ["Pillars of Taj Mahal", "Qutub Minar", "Gateway of India", "Charminar"], 
-            answer: "Pillars of Taj Mahal" 
-        },
-        { 
-            image: "images/Leaning tower of pisa Italy.jpeg", 
-            options: ["Leaning Tower of Pisa", "Eiffel Tower", "Big Ben", "Colosseum"], 
-            answer: "Leaning Tower of Pisa" 
-        }
+    const quizData = [
+        { image: "images/sydney Opera Hourse.jpeg", options: ["Sydney Opera House", "Lotus Temple", "Burj Al Arab", "Marina Bay Sands"], answer: "Sydney Opera House" },
+        { image: "images/Hoover Dam.jpeg", options: ["Itaipu Dam", "Hoover Dam", "Three Gorges Dam", "Aswan High Dam"], answer: "Hoover Dam" },
+        { image: "images/Golden gate bridge.jpeg", options: ["Brooklyn Bridge", "Akashi Kaikyo Bridge", "Golden Gate Bridge", "Tower Bridge"], answer: "Golden Gate Bridge" },
+        { image: "images/Burj Khalifa.jpeg", options: ["Shanghai Tower", "Burj Khalifa", "Petronas Towers", "Taipei 101"], answer: "Burj Khalifa" },
+        { image: "images/Petronas Tower.jpeg", options: ["Willis Tower", "Petronas Towers", "Kingdom Centre", "Marina Bay Sands"], answer: "Petronas Towers" },
+        { image: "images/Millau Viaduct.jpeg", options: ["Millau Viaduct", "Golden Gate Bridge", "Vasco da Gama Bridge", "Akashi Kaikyo Bridge"], answer: "Millau Viaduct" },
+        { image: "images/Akashi Kaikyo Bridge.jpeg", options: ["Humber Bridge", "Akashi Kaikyo Bridge", "Mackinac Bridge", "Golden Gate Bridge"], answer: "Akashi Kaikyo Bridge" },
+        { image: "images/Chenab railway Bridge.jpeg", options: ["Bogibeel Bridge", "Chenab Railway Bridge", "Pamban Bridge", "Millau Viaduct"], answer: "Chenab Railway Bridge" },
+        { image: "images/Pillars of Taj Mahal.jpeg", options: ["Pillars of Taj Mahal", "Qutub Minar", "Gateway of India", "Charminar"], answer: "Pillars of Taj Mahal" },
+        { image: "images/Leaning tower of pisa Italy.jpeg", options: ["Leaning Tower of Pisa", "Eiffel Tower", "Big Ben", "Colosseum"], answer: "Leaning Tower of Pisa" }
     ];
 
     let currentQuestionIndex = 0;
     let score = 0;
-    let timeLeft; // Timer variable for individual questions
+    let timeLeft; 
     let timerInterval;
+    
+    // NEW: Variable to track what the user clicks before hitting confirm
+    let currentSelectedOption = null; 
     
     let userData = { name: "", email: "", department: "", semester: "" };
     let userAnswers = []; 
@@ -235,6 +292,7 @@
     const imageContainer = document.getElementById("image-container");
     const optionsContainer = document.getElementById("options-container");
     const userForm = document.getElementById("user-form");
+    const confirmBtn = document.getElementById("confirm-btn");
 
     userForm.addEventListener("submit", function(e) {
         e.preventDefault();
@@ -249,7 +307,7 @@
         introSection.style.display = "none";
         quizSection.style.display = "block";
         
-        loadQuestionImage(); // Timer starts inside this function now
+        loadQuestionImage(); 
     });
 
     document.getElementById("proceed-btn").addEventListener("click", function() {
@@ -259,26 +317,49 @@
     });
 
     function loadQuestionImage() {
-        // Reset UI for the new question
         imageContainer.style.display = "block";
         optionsContainer.style.display = "none";
         document.getElementById("question-img").src = quizData[currentQuestionIndex].image;
         
-        // Start the 60-second timer for this specific question
         startTimer();
     }
 
+    // UPDATED: Now creates options that wait for the Confirm button
     function loadQuestionOptions() {
         const optionsList = document.getElementById("options-list");
         optionsList.innerHTML = "";
         
+        currentSelectedOption = null; // Reset selection
+        confirmBtn.style.display = "none"; // Hide confirm button initially
+        
         quizData[currentQuestionIndex].options.forEach(option => {
             const button = document.createElement("button");
             button.innerText = option;
-            button.onclick = () => checkAnswer(option);
+            button.className = "option-btn";
+            
+            button.onclick = function() {
+                // Remove 'selected' class from all buttons
+                const allButtons = document.querySelectorAll('.option-btn');
+                allButtons.forEach(btn => btn.classList.remove('selected'));
+                
+                // Add 'selected' class to the clicked button
+                this.classList.add('selected');
+                
+                // Save the choice and show the confirm button
+                currentSelectedOption = option;
+                confirmBtn.style.display = "block";
+            };
+            
             optionsList.appendChild(button);
         });
     }
+
+    // NEW: Event listener for the confirm button
+    confirmBtn.addEventListener("click", function() {
+        if (currentSelectedOption) {
+            checkAnswer(currentSelectedOption);
+        }
+    });
 
     function checkAnswer(selectedOption) {
         userAnswers.push(selectedOption);
@@ -295,29 +376,23 @@
         }
     }
 
-    // UPDATED TIMER LOGIC
     function startTimer() {
-        // 1. Clear any existing timer from the previous question
         clearInterval(timerInterval);
         
-        // 2. Reset the clock to 60 seconds
         timeLeft = 60; 
         const timeDisplay = document.getElementById("time");
         timeDisplay.innerText = timeLeft;
 
-        // 3. Start the countdown
         timerInterval = setInterval(() => {
             timeLeft--;
             timeDisplay.innerText = timeLeft;
             
-            // 4. Handle what happens when time runs out for this question
             if (timeLeft <= 0) {
-                clearInterval(timerInterval); // Stop the clock
-                userAnswers.push("No Answer (Timeout)"); // Record missed question
+                clearInterval(timerInterval); 
+                userAnswers.push("No Answer (Timeout)"); 
                 
                 currentQuestionIndex++;
                 
-                // Move to the next question or end the quiz
                 if (currentQuestionIndex < quizData.length) {
                     loadQuestionImage(); 
                 } else {
@@ -328,7 +403,7 @@
     }
 
     function endQuiz() {
-        clearInterval(timerInterval); // Ensure clock is stopped
+        clearInterval(timerInterval); 
         quizSection.style.display = "none";
         resultSection.style.display = "block";
         document.getElementById("score").innerText = score;
@@ -356,10 +431,10 @@
             mode: 'no-cors'
         }).then(() => {
             syncStatus.innerText = "Results saved successfully!";
-            syncStatus.style.color = "#5cb85c";
+            syncStatus.style.color = "#188038"; // Google Form Green
         }).catch(error => {
             syncStatus.innerText = "Sync failure. Please check your connectivity.";
-            syncStatus.style.color = "#d9534f";
+            syncStatus.style.color = "#d93025"; // Google Form Red
         });
     }
 </script>
