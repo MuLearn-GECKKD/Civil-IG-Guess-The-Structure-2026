@@ -332,7 +332,15 @@
     function loadQuestionImage() {
         imageContainer.style.display = "block";
         optionsContainer.style.display = "none";
-        document.getElementById("question-img").src = quizData[currentQuestionIndex].image;
+        
+        const currentData = quizData[currentQuestionIndex];
+        const imgElement = document.getElementById("question-img");
+        
+        imgElement.src = currentData.image;
+        
+        // DECOY ALT TEXT: Dynamically pulls a wrong option to trick screen scanners
+        const wrongAnswers = currentData.options.filter(opt => opt !== currentData.answer);
+        imgElement.alt = wrongAnswers[0]; // Sets alt text to the first incorrect option
         
         startTimer();
     }
